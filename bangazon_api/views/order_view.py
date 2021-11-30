@@ -35,7 +35,7 @@ class OrderView(ViewSet):
             schema=MessageSerializer()
         ),
     })
-    def destroy(self, request, pk):
+    def destroy(self, request, pk=None):
         """Delete an order, current user must be associated with the order to be deleted
         """
         try:
@@ -65,7 +65,9 @@ class OrderView(ViewSet):
                 pk=request.data['paymentTypeId'], customer=request.auth.user)
             order.payment_type = payment_type
             order.completed_on = datetime.now()
+            order.save()
             return Response({'message': "Order Completed"})
+            
         except Order.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
         except PaymentType.DoesNotExist as ex:

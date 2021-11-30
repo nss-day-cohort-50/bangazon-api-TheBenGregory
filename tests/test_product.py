@@ -75,3 +75,26 @@ class ProductTests(APITestCase):
         response = self.client.get('/api/products')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), Product.objects.count())
+
+    def test_delete_product(self):
+        
+        product = Product()
+        product.product_id = 1
+        product.name = "Rubber Sheets"
+        product.price = 19.99
+        product.description = "Rubber Sheets"
+        product.quantity = 1
+        product.location = "Vermont"
+        product.imagePath = ""
+        product.category_id = 1
+        product.store_id = 1
+
+      
+        product.save()
+
+        url = f'/api/products/{product.id}'
+        
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
