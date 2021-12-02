@@ -78,19 +78,19 @@ class ProductTests(APITestCase):
 
     def test_delete_product(self):
         
-        product = Product()
-        product.product_id = 1
-        product.name = "Rubber Sheets"
-        product.price = 19.99
-        product.description = "Rubber Sheets"
-        product.quantity = 1
-        product.location = "Vermont"
-        product.imagePath = ""
-        product.category_id = 1
-        product.store_id = 1
-
+        product = Product.objects.create(
+        product_id = 1,
+        name = "Rubber Sheets",
+        price = 19.99,
+        description = "Rubber Sheets",
+        quantity = 1,
+        location = "Vermont",
+        imagePath = "",
+        category_id = 1,
+        store_id = 1,
+        )
       
-        product.save()
+    
 
         url = f'/api/products/{product.id}'
         
